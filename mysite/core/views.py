@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from .forms import EditProfileForm
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
@@ -45,12 +46,20 @@ def change_password(request):
 
 def edit_profile(request):
     if request.method == 'POST':
-        form=UserChangeForm(request.POST, instance=request.user)
+        form=EditProfileForm(request.POST, instance=request.user)
 
         if form.is_valid():
-            form.save()
+            user=form.save()
+            #username=form.cleaned_data.get('username')
+
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your username was successfully updated!')
             return redirect('home')
+        
+        else:
+            messages.error(request, 'Please correct the error below.')
+            
 
     else:
-        form = UserChangeForm()
+        form = EditProfileForm(instance=request.user)
     return render(request, 'edit_profile.html', {'form': form})
