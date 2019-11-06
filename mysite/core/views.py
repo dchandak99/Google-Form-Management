@@ -1,3 +1,6 @@
+import csv
+import sqlite3
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
@@ -8,6 +11,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.models import User
 
 @login_required
 def home(request):
@@ -63,3 +67,31 @@ def edit_profile(request):
     else:
         form = EditProfileForm(instance=request.user)
     return render(request, 'edit_profile.html', {'form': form})
+
+
+def export_view(request):
+    # Create the HttpResponse object with the appropriate CSV header.
+    
+    conn=sqlite3.connect('db.sqlite3')
+    cursor=conn.cursor()
+    response = HttpResponse(content_type='text/csv')
+
+    cursor.execute("select * from core_data1")
+        
+    response['Content-Disposition'] = 'attachment; filename="Data1.csv"'
+    writer = csv.writer(response)
+    writer.writerow([i[0] for i in cursor.description])
+    writer.writerows(cursor)
+
+
+    return response
+
+
+
+
+
+
+
+
+
+

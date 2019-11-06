@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^password/$',core_views.change_password, name='change_password'),
     #url('^change_password/$', auth_views.password_change, {'post_change_redirect': 'next_page'}, name='password_change'),
     url(r'^edit_profile/$',core_views.edit_profile, name='edit_profile'),
+    url(r'^export_view/$',core_views.export_view, name='export_view'),
 ]
