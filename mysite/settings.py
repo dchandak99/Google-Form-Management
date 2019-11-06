@@ -79,6 +79,21 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+
+    # 'devansh':{
+    # 	'NAME': 'devansh_data',
+    # 	'ENGINE': 'django.db.backends.sqlite3',
+    # 	'USER':'dchandak',
+    # 	'PASSWORD': '12345678'
+    # },
+
+    # 'devansh2':{
+    # 	'NAME':'devansh_data2',
+    # 	'ENGINE': 'django.db.backends.sqlite3',
+    # 	'USER':'dchandak99',
+    # 	'PASSWORD': '12345678'
+    # }
+
 }
 
 
