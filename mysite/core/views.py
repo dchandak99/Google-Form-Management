@@ -82,7 +82,7 @@ def export_view(request):
         response['Content-Disposition'] = 'attachment; filename="Data1.csv"'
         writer = csv.writer(response)
         writer.writerow([i[0] for i in cursor.description])
-        writer.writerow(cursor)
+        writer.writerows(cursor)
 
     elif(request.user.username=='dchandak99'):
        
