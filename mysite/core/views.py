@@ -76,12 +76,21 @@ def export_view(request):
     cursor=conn.cursor()
     response = HttpResponse(content_type='text/csv')
 
-    cursor.execute("select * from core_data1")
+    if(request.user.username=='dchandak'):
+        cursor.execute("select * from core_data1")
         
-    response['Content-Disposition'] = 'attachment; filename="Data1.csv"'
-    writer = csv.writer(response)
-    writer.writerow([i[0] for i in cursor.description])
-    writer.writerows(cursor)
+        response['Content-Disposition'] = 'attachment; filename="Data1.csv"'
+        writer = csv.writer(response)
+        writer.writerow([i[0] for i in cursor.description])
+        writer.writerow(cursor)
+
+    elif(request.user.username=='dchandak99'):
+       
+        cursor.execute("select * from core_data1")
+        response['Content-Disposition'] = 'attachment; filename="Data2.csv"'
+        writer = csv.writer(response)
+        writer.writerow([i[0] for i in cursor.description])
+        writer.writerows(cursor)
 
 
     return response
