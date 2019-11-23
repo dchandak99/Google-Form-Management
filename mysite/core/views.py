@@ -22,10 +22,14 @@ def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            form.save(commit=False)
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
+            user.is_superuser=True
+            user.is_staff=True
+            user.is_admin=True
+            user.save()
             login(request, user)
             return redirect('home')
     else:
@@ -96,7 +100,11 @@ def export_view(request):
     return response
 
 
+def Add_form(request):
+    return render(request, 'home.html')
 
+def view_responses(request):
+    return render(request, 'home.html')
 
 
 
