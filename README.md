@@ -26,3 +26,6 @@ For database details, you can go to db.sqlite3 and see relevant the tables.
 We have two tables:
 a) One with Form ID and User ID
 b) One with Form ID and Questions with all its information (Necessity, Visiblilty, Text, Type, Choice)
+
+If you want to run it on another system, connected to the same ip address,
+then you can add it's ip address to ALLOWED_HOSTS in settings.py 
