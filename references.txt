@@ -1,0 +1,7 @@
+https://github.com/stephenmcd/django-forms-builder
+https://github.com/barseghyanartur/django-fobi
+https://django-forms-builder.readthedocs.io/en/latest/
+-. ihttps://stackoverflow.com/questions/53194989/how-to-create-unique-urls-in-django
+https://stackoverflow.com/questions/11241668/what-is-reverse-in-django
+https://stackoverflow.com/questions/19919547/where-can-i-find-the-source-file-of-admin-site-urls
+https://www.youtube.com/watch?v=qwE9TFNub84
