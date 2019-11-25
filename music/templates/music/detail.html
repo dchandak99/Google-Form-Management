@@ -1,0 +1,116 @@
+{% extends 'music/base.html' %}
+{% block title %}{{ gform }}{% endblock %}
+{% block albums_active %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid songs-container">
+
+    <div class="row">
+
+    
+        <div class="col-sm-4 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a href="{% url 'music:detail' gform.id %}">
+                       <!--  {% if album.album_logo %}
+                            <img src="{{ album.album_logo.url }}" class="img-responsive">
+                        {% else %}
+                            <h3>No image to display</h3>
+                        {% endif %} -->
+                    </a>
+                    <ul class="nav nav-pills">
+                        <li role="presentation">  <h1> <b> {{ gform.gform_name }} </b></h1> </li>
+                        <li role="presentation"> <h2> {{ gform.gform_desc }} </h2> </li>
+                    </ul>
+                         <h5> Generated Form Link: </h5> 
+                        <font color="red"> &nbsp; (current ip_address) + <br>{{ request.get_full_path }}user/{{ user.id }}/link </font>
+                   
+                   <!--  <h2>{{ album.artist }}</h2> -->
+                </div>
+            </div>
+        </div>
+
+       
+        <div class="col-sm-8 col-md-9">
+
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li role="presentation" class="active"><a href="{% url 'music:detail' gform.id %}">View All</a></li>
+                <li role="presentation"><a href="{% url 'music:create_question' gform.id %}">Add New Question</a></li> 
+                <li role="presentation"><a href="{% url 'music:filler' gform.id user.id  %}">Preview</a></li> 
+               
+
+
+            </ul>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <h3>All Questions</h3>
+
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+
+                    <div class="table-responsive">
+                        <div style="overflow-x:auto;">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Question type</th>
+                            <th>Question text</th>
+                            <th> Choices </th>
+                            <th>Compulsary</th>
+                            <th>Visible</th>
+                            <th>Action</th>
+                            
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for question in gform.question_set.all %}
+                            <tr>
+                                <td>{{ question.ques_type }}</td>
+                                <td>
+                                    {{ question.ques_text }} 
+                                </td>
+                                <td>
+                                   
+
+                                   {{ question.choices }}
+                                </td>
+                                <td> 
+                                {% if question.is_req %} True 
+                                {% else %} False
+                                {% endif %}</td>
+                                <td>
+                                    {% if question.is_vis %} True 
+                                {% else %} False
+                                {% endif %}
+                                </td>
+
+                                <td> <form action="{% url 'music:delete_question' gform.id question.id %}" method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="question_id" value="{{ question.id }}" />
+                                        <button type="submit" class="btn btn-danger btn-xs">
+                                            <span class="glyphicon glyphicon-remove"></span>&nbsp; Delete
+                                        </button>
+                                    </form>
+                                   </td>
+
+                                  
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div></div>
+
+                </div>
+            </div> 
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

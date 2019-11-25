@@ -1,0 +1,17 @@
+{% extends 'music/base.html' %}
+{% block title %}{{ gform }}{% endblock %}
+{% block albums_active %}active{% endblock %}
+
+{% block body %}
+
+<h1> {{ gform.gform_name }} </h1>
+<h1> {{ gform.gform_desc }} </h1>
+
+<ul>
+{% for response in gform.response_set.all %}
+	<li> {{ response.resp_text }} </li>
+{% endfor %}
+
+</ul>
+
+{% endblock %}

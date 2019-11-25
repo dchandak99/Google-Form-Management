@@ -1,0 +1,100 @@
+{% extends 'music/base.html' %}
+ {% block title %}Google Forms{% endblock %} 
+{% block albums_active %}active{% endblock %}
+
+{% block body %}
+<div class="albums-container container-fluid">
+
+    <!-- !-- Albums -->
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>{{ user.username }}'s Forms</h3>
+        </div>
+        {% if gforms %}
+            {% for gform in gforms %}
+                <div class="col-sm-4 col-lg-2">
+                    <div class="thumbnail">
+                        <div >
+                            <h2>{{ gform.gform_name }}</h2>
+                            <h4>{{ gform.gform_desc }}</h4>
+
+                            <!--  View Details -->
+                            <a href="{% url 'music:detail' gform.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+
+                            <!-- Delete Album  -->
+                            <form action="{% url 'music:delete_form' gform.id %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="gform_id" value="{{ gform.id }}" />
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+
+                                <a href="{% url 'music:export_csv' gform.id %}" class="btn  btn-sm" role="button">Export CSV</a>
+                                 <a href="#" class="btn  btn-sm" role="button">Add collaborator</a>
+                            </form>
+
+                         
+
+                        </div>
+                    </div>
+                </div>
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            {% endfor %}
+        {% else %}
+            <div class="col-sm-12">
+                <br>
+                <a href="{% url 'music:create_form' %}">
+                    <button type="button" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span>&nbsp; Add a Form
+                    </button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+   <!--  !-- If user searches and there are questions  -->
+    {% if questions %}
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Questions</h3>
+            </div>
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>a</th>
+                                    <th>b</th>
+                                    <th>c</th>
+                                    <th>d/th>
+                                    <th>e</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for question in questions %}
+                                    <tr>
+                                        <td>{{ question.ques_text }}</td>
+                                        <td>{{ question.ques_type }}</td>
+                                        <td>
+                                            abcd
+                                        </td>
+                                        <td>
+                                            
+                                            <a href="{% url 'music:detail' question.gform.id %}">{{ question.gform.gform_name }}</a>
+                                        </td>
+                                        <td>
+                                            abcd
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}
